@@ -37,6 +37,10 @@ dependencies {
 
 	/* swagger */
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+	/* environment variables */
+	implementation 'me.paulschwarz:spring-dotenv:3.0.0'
+
 }
 
 tasks.named('test') {

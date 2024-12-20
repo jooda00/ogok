@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Custom ###
-*.yml
+application.yml
 *.properties
 .env
-db_data
+mysql_data
