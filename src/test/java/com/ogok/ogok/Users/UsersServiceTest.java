@@ -1,5 +1,6 @@
 package com.ogok.ogok.Users;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -41,5 +42,19 @@ public class UsersServiceTest {
 
 		// then
 		verify(usersRepository, times(1)).save(ArgumentMatchers.refEq(mockUser)); // Repository의 save 메서드가 호출되었는지 확인
+	}
+
+	@Test
+	@DisplayName("사용자가 서비스를 구독하면 활성 상태가 됩니다.")
+	void testSaveUsersIsActiveWhenSubscribe() {
+		// given
+		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT); // 테스트용 요청 객체
+		Users mockUser = Users.of(mockRequest);
+
+		// when
+		usersService.saveUsers(mockRequest);
+
+		// then
+		assertThat(mockUser.isStatus()).isEqualTo(true);
 	}
 }
