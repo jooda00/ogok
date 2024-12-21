@@ -38,6 +38,5 @@ out/
 
 ### Custom ###
 application.yml
-*.properties
 .env
 mysql_data
