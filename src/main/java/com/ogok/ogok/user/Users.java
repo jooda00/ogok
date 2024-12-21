@@ -35,13 +35,39 @@ public class Users extends BaseEntity {
 	private SongGenre songGenre;
 
 	@Column(nullable = false)
-	private boolean status = false;
+	@Enumerated(EnumType.STRING)
+	private UsersStatus status;
 
 	public static Users of(UsersReq usersReq) {
 		return Users.builder()
 			.email(usersReq.getEmail())
 			.songGenre(usersReq.getSongGenre())
-			.status(true)
+			.status(UsersStatus.PENDING)
 			.build();
+	}
+
+	public static Users createWithId(Long id, UsersReq usersReq) {
+		return Users.builder()
+			.id(id)
+			.email(usersReq.getEmail())
+			.songGenre(usersReq.getSongGenre())
+			.status(UsersStatus.PENDING)
+			.build();
+	}
+
+	public static Users createActiveUser(Long id, UsersReq usersReq) {
+		return Users.builder()
+			.id(id)
+			.email(usersReq.getEmail())
+			.songGenre(usersReq.getSongGenre())
+			.status(UsersStatus.ACTIVE)
+			.build();
+	}
+
+	public void cancelSubscription() {
+		if (UsersStatus.PENDING.equals(this.status)) {
+			throw new IllegalArgumentException("구독 전에는 구독을 취소할 수 없습니다.");
+		}
+		this.status = UsersStatus.CANCELLED;
 	}
 }
