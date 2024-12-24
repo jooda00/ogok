@@ -106,4 +106,20 @@ public class EmailVerificationServiceTest {
 
 		assertEquals("인증번호가 일치하지 않습니다.", exception.getMessage());
 	}
+
+	@Test
+	@DisplayName("인증정보가 존재하지 않는 경우 예외 발생")
+	void notExistedEmailVerificationTest() {
+		String email = "test@test.com";
+		String code = "123456";
+
+		when(emailVerificationRepository.findByEmail(email)).thenReturn(null);
+
+		IllegalArgumentException exception = assertThrows(
+			IllegalArgumentException.class,
+			() -> emailVerificationService.verifyVerificationCode(email, code)
+		);
+
+		assertEquals("인증정보가 존재하지 않습니다.", exception.getMessage());
+	}
 }
