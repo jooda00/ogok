@@ -20,13 +20,18 @@ public class EmailVerificationService {
 	private final EmailService emailService;
 	private final SpringTemplateEngine templateEngine;
 
+	@Transactional
 	public void sendVerificationEmail(String email) {
 		log.info("인증번호 생성 시작");
 		String verificationCode = generateVerificationCode();
 		log.info("인증번호 생성 완료");
+
 		log.info("인증메일 전송 시작");
 		emailService.sendMail(email, "오곡 인증 메일", setContext(verificationCode));
 		log.info("인증메일 전송 성공");
+
+		EmailVerification emailVerification = EmailVerification.of(verificationCode, email);
+		emailVerificationRepository.save(emailVerification);
 	}
 
 	private String generateVerificationCode() {
