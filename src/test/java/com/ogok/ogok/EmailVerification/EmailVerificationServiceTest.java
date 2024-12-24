@@ -70,21 +70,40 @@ public class EmailVerificationServiceTest {
 	void verifyVerificationCodeTest() {
 		// given
 		String email = "test@test.com";
-		String verificationCode = "123456";
+		String code = "123456";
 
 		Users mockUser = Users.of(new UsersReq(email, SongGenre.UPBEAT));
-		EmailVerification mockVerification = EmailVerification.of(verificationCode,	email);
+		EmailVerification mockVerification = EmailVerification.of(code,	email);
 
 		when(emailVerificationRepository.findByEmail(email)).thenReturn(mockVerification);
 		when(usersRepository.findByEmail(email)).thenReturn(mockUser);
 
 		// when
-		emailVerificationService.verifyVerificationCode(email, verificationCode);
+		emailVerificationService.verifyVerificationCode(email, code);
 
 		// then
 		assertTrue(mockVerification.isVerified());
 		assertEquals(UsersStatus.ACTIVE, mockUser.getStatus());
 		verify(emailVerificationRepository, times(1)).findByEmail(email);
 		verify(usersRepository, times(1)).findByEmail(email);
+	}
+
+	@Test
+	@DisplayName("잘못된 인증번호로 검증 시 예외 발생")
+	void invalidVerificationCodeTest() {
+		String email = "test@test.com";
+		String correctCode = "123456";
+		String incorrectCode = "654321";
+
+		EmailVerification mockVerification = EmailVerification.of(correctCode,	email);
+
+		when(emailVerificationRepository.findByEmail(email)).thenReturn(mockVerification);
+
+		IllegalArgumentException exception = assertThrows(
+			IllegalArgumentException.class,
+			() -> emailVerificationService.verifyVerificationCode(email, incorrectCode)
+		);
+
+		assertEquals("인증번호가 일치하지 않습니다.", exception.getMessage());
 	}
 }
