@@ -1,6 +1,8 @@
 services:
   ogok-server:
     build: ..
+    env_file:
+      - .env
     ports:
       - ${SERVER_PORT}:8080
     depends_on:
