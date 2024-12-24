@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오곡 - 이메일 인증</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+<table>
+    <tr>
+        <td>
+            <table style="background-color: #ffffff; border: 1px solid #d1e7ff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <tr>
+                    <td style="text-align: left; padding: 20px; border-bottom: 1px solid #d1e7ff;">
+                        <h1 style="font-size: 20px; color: #0056b3; margin: 0;">오곡</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 20px; text-align: center;">
+                        <p style="font-size: 16px; color: #333333; margin: 10px 0;">구독을 완료하기 위해 아래 인증번호를 입력해주세요.</p>
+                        <p style="font-size: 16px; color: #333333; margin: 10px 0;">이 인증번호는 구독 절차를 위한 인증번호입니다.</p>
+                        <div style="font-size: 22px; font-weight: bold; color: #0056b3; background-color: #f0faff; padding: 10px 20px; display: inline-block; border-radius: 5px; margin-top: 10px; border: 1px solid #d1e7ff;">
+                            <p th:text="|${verificationCode}|">인증번호</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
