@@ -21,8 +21,10 @@ import lombok.NoArgsConstructor;
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
 public class Song extends BaseEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "song_id")
 	private Long id;
 
 	@Column(nullable = false)

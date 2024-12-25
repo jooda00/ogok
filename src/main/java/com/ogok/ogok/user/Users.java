@@ -1,15 +1,22 @@
 package com.ogok.ogok.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ogok.ogok.common.BaseEntity;
 import com.ogok.ogok.song.SongGenre;
+import com.ogok.ogok.song_history.SongHistory;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +32,7 @@ public class Users extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private Long id;
 
 	@Column(unique = true, nullable = false)
@@ -37,6 +45,9 @@ public class Users extends BaseEntity {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private UsersStatus status;
+
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private List<SongHistory> songHistories = new ArrayList<>();
 
 	public static Users of(UsersReq usersReq) {
 		return Users.builder()
