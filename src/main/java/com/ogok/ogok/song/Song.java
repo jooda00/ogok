@@ -41,4 +41,15 @@ public class Song extends BaseEntity {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private SongGenre songGenre;
+
+	public static Song from(SongReq req) {
+		return Song.builder()
+			.id(req.getId())
+			.title(req.getTitle())
+			.singer(req.getSinger())
+			.introduction(req.getIntroduction())
+			.youtubeLink(req.getYoutubeLink())
+			.songGenre(req.getSongGenre())
+			.build();
+	}
 }
