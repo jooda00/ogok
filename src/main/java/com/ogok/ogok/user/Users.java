@@ -49,7 +49,7 @@ public class Users extends BaseEntity {
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<SongHistory> songHistories = new ArrayList<>();
 
-	public static Users of(UsersReq usersReq) {
+	public static Users from(UsersReq usersReq) {
 		return Users.builder()
 			.email(usersReq.getEmail())
 			.songGenre(usersReq.getSongGenre())
