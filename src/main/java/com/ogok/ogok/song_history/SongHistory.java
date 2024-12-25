@@ -36,12 +36,19 @@ public class SongHistory extends BaseEntity {
 	@JoinColumn(name = "song_id")
 	private Song song;
 
-	public void setUsers(Users users) {
+	public SongHistory(Song song, Users users) {
+		this.song = song;
+		setUsers(users);
+	}
+
+	public void setUsers(Users user) {
 		// 기존 users와의 연관 관계 제거
 		if (this.users != null) {
 			this.users.getSongHistories().remove(this);
 		}
-		this.users = users;
-		users.getSongHistories().add(this);
+
+		this.users = user;
+
+		user.addSongHistory(this);
 	}
 }

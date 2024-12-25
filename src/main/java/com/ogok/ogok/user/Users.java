@@ -49,11 +49,20 @@ public class Users extends BaseEntity {
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<SongHistory> songHistories = new ArrayList<>();
 
+	public void addSongHistory(SongHistory songHistory) {
+		this.songHistories.add(songHistory);
+
+		if (songHistory.getUsers() != this) {
+			songHistory.setUsers(this);
+		}
+	}
+
 	public static Users from(UsersReq usersReq) {
 		return Users.builder()
 			.email(usersReq.getEmail())
 			.songGenre(usersReq.getSongGenre())
 			.status(UsersStatus.PENDING)
+			.songHistories(new ArrayList<>())
 			.build();
 	}
 
