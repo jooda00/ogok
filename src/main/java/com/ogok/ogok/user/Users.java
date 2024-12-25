@@ -70,4 +70,8 @@ public class Users extends BaseEntity {
 		}
 		this.status = UsersStatus.CANCELLED;
 	}
+
+	public void setStatusActive() {
+		this.status = UsersStatus.ACTIVE;
+	}
 }

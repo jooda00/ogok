@@ -41,6 +41,10 @@ dependencies {
 	/* environment variables */
 	implementation 'me.paulschwarz:spring-dotenv:3.0.0'
 
+	/* thymeleaf */
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+	implementation 'org.springframework:spring-context-support'
 }
 
 tasks.named('test') {

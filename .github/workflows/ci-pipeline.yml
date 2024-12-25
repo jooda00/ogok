@@ -20,6 +20,15 @@ jobs:
       DB_VOLUMES: ${{ secrets.DB_VOLUMES }}
       DB_PORT: ${{ secrets.DB_PORT }}
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
+      SPRING_MAIL_HOST: ${{ secrets.SPRING_MAIL_HOST }}
+      SPRING_MAIL_PORT: ${{ secrets.SPRING_MAIL_PORT }}
+      SPRING_MAIL_USERNAME: ${{ secrets.SPRING_MAIL_USERNAME }}
+      SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
+      SPRING_MAIL_SMTP_SSL_TRUST: ${{ secrets.SPRING_MAIL_SMTP_SSL_TRUST }}
+      SPRING_MAIL_SMTP_SSL_PROTOCOLS: ${{ secrets.SPRING_MAIL_SMTP_SSL_PROTOCOLS }}
+      SPRING_MAIL_SMTP_CONNECTIONTIMEOUT: ${{ secrets.SPRING_MAIL_SMTP_CONNECTIONTIMEOUT }}
+      SPRING_MAIL_SMTP_TIMEOUT: ${{ secrets.SPRING_MAIL_SMTP_TIMEOUT }}
+      SPRING_MAIL_SMTP_WRITETIMEOUT: ${{ secrets.SPRING_MAIL_SMTP_WRITETIMEOUT }}
     steps:
       - name: 체크아웃
         uses: actions/checkout@v4
