@@ -17,7 +17,7 @@ public class UsersService {
 	@Transactional
 	public void saveUser(UsersReq usersReq) {
 		log.info("사용자 저장 시작");
-		Users user = Users.of(usersReq);
+		Users user = Users.from(usersReq);
 		if (usersRepository.findByEmail(user.getEmail()) != null) {
 			throw new IllegalArgumentException("이미 사용 중인 이메일 입니다. 다른 이메일을 선택해주세요.");
 		}

@@ -39,7 +39,7 @@ public class UsersServiceTest {
 	void testSaveUser() {
 		// given
 		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT); // 테스트용 요청 객체
-		Users mockUser = Users.of(mockRequest);
+		Users mockUser = Users.from(mockRequest);
 
 		// when
 		usersService.saveUser(mockRequest);
@@ -53,7 +53,7 @@ public class UsersServiceTest {
 	void testSaveUserIsActiveWhenSubscribe() {
 		// given
 		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT);
-		Users mockUser = Users.of(mockRequest);
+		Users mockUser = Users.from(mockRequest);
 
 		// when
 		usersService.saveUser(mockRequest);
@@ -105,7 +105,7 @@ public class UsersServiceTest {
 		UsersReq existingUserReq = new UsersReq("test@test.com", SongGenre.UPBEAT);
 		UsersReq newUserReq = new UsersReq("test@test.com", SongGenre.CALM);
 
-		Users existingUser = Users.of(existingUserReq);
+		Users existingUser = Users.from(existingUserReq);
 
 		when(usersRepository.findByEmail("test@test.com")).thenReturn(existingUser);
 
