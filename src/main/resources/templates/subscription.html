@@ -3,115 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/subscription.css"/>
     <title>오곡 - 구독 신청</title>
-    <style>
-        /* 기본 스타일 */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 500px;
-            width: 90%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #d1e7ff;
-        }
-        h1 {
-            font-size: 24px;
-            color: #0056b3;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 14px;
-            color: #666666;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-size: 16px;
-            color: #333333;
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input[type="email"], button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #d1e7ff;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
-        input[type="email"]:focus, button:focus {
-            outline: none;
-            border-color: #0056b3;
-            box-shadow: 0 0 4px rgba(0, 86, 179, 0.2);
-        }
-        button {
-            background-color: #0056b3;
-            color: #ffffff;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 8px;
-        }
-        button:hover {
-            background-color: #004494;
-        }
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-bottom: 20px;
-        }
-        .radio-group input {
-            display: none;
-        }
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            border: 1px solid #d1e7ff;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: #f7faff;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .radio-group label:hover {
-            background-color: #e3f2fd;
-        }
-        .radio-group input:checked + label {
-            background-color: #0056b3;
-            color: #ffffff;
-            border-color: #0056b3;
-        }
-
-        /* 반응형 스타일 */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 20px;
-            }
-            label {
-                font-size: 14px;
-            }
-            input[type="email"], button {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-    </style>
 </head>
 <body>
 <div class="container">
@@ -119,14 +12,12 @@
     <p>매일 오전 8시에 원하시는 장르에 맞는 곡을 추천해드립니다.🎵</p>
     <form id="subscription-form">
         <label for="email">이메일 주소
-            <small>* 이메일 형식에 맞게 입력해주세요.</small>
+            <small>* 이메일 변경은 불가합니다. 형식에 맞게 알맞게 입력해주세요.</small>
         </label>
         <input type="email" id="email" placeholder="이메일을 입력해주세요." required>
-
-        <label>원하시는 장르
-            <small>* 장르는 하나만 선택 가능합니다.</small>
-        </label>
-
+    <label>원하시는 장르
+        <small>* 장르는 하나만 선택 가능합니다.</small>
+    </label>
         <div class="radio-group">
             <input type="radio" id="exciting" name="genre" value="신나는" required>
             <label for="exciting">신나는</label>
@@ -139,13 +30,52 @@
 
             <input type="radio" id="calm" name="genre" value="잔잔한" required>
             <label for="calm">잔잔한</label>
-
-            <input type="radio" id="comfortable" name="genre" value="편안한" required>
-            <label for="comfortable">편안한</label>
         </div>
-
         <button type="submit">구독 신청</button>
     </form>
 </div>
+
+<!-- 모달 -->
+<div id="subscription-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>구독 신청 완료 🎉</h3>
+        <p>구독 신청이 완료되었습니다. 창을 닫으시면 메인 페이지로 이동합니다.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('subscription-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const genre = document.querySelector('input[name="genre"]:checked').value;
+        const modal = document.getElementById('subscription-modal');
+        const closeModal = () => {
+            window.location.href = '/';
+        };
+
+        fetch('/api/subscription/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email, genre }),
+        })
+            .then(async response => {
+                const message = await response.text();
+                if (response.ok) {
+                    modal.style.display = 'flex';
+                    document.querySelector('.close').onclick = closeModal;
+                    modal.onclick = (event) => {
+                        if (event.target === modal) closeModal();
+                    };
+                } else {
+                    alert(message);
+                }
+            })
+            .catch(error => {
+                console.error("Network Error:", error);
+                alert('서버 오류가 발생했습니다.');
+            });
+    });
+</script>
 </body>
 </html>
