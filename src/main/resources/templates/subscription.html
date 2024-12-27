@@ -52,7 +52,8 @@
         const genre = document.querySelector('input[name="genre"]:checked').value;
         const modal = document.getElementById('subscription-modal');
         const redirectToVerification = () => {
-            window.location.href = '/verified';
+            sessionStorage.setItem('email', email); // 이메일을 세션 스토리지에 저장
+            window.location.href = '/verified.html';
         };
 
         fetch('/api/subscriptions', {
