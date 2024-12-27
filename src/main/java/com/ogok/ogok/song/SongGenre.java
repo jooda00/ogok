@@ -6,14 +6,22 @@ import lombok.Getter;
 public enum SongGenre {
 
 	UPBEAT("신나는"),
-	CALM("잔잔한"),
-	SOULFUL("감성적인"),
 	INTENSE("강렬한"),
-	RELAXING("편안한");
+	CALM("잔잔한"),
+	SOULFUL("감성적인");
 
-	private String genre;
+	private String description;
 
-	SongGenre(String genre) {
-		this.genre = genre;
+	SongGenre(String description) {
+		this.description = description;
+	}
+
+	public static SongGenre convertStringToSongGenre(String value) {
+		for (SongGenre genre : SongGenre.values()) {
+			if (genre.getDescription().equals(value)) {
+				return genre;
+			}
+		}
+		throw new IllegalArgumentException("유효하지 않은 장르 값: " + value);
 	}
 }

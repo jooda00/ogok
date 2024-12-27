@@ -72,7 +72,7 @@ public class EmailVerificationServiceTest {
 		String email = "test@test.com";
 		String code = "123456";
 
-		Users mockUser = Users.from(new UsersReq(email, SongGenre.UPBEAT));
+		Users mockUser = Users.from(new UsersReq(email, "신나는"));
 		EmailVerification mockVerification = EmailVerification.of(code,	email);
 
 		when(emailVerificationRepository.findByEmail(email)).thenReturn(mockVerification);

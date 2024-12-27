@@ -38,7 +38,7 @@ public class UsersServiceTest {
 	@DisplayName("사용자를 정상적으로 저장합니다.")
 	void testSaveUser() {
 		// given
-		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT); // 테스트용 요청 객체
+		UsersReq mockRequest = new UsersReq("test@test.com", "신나는"); // 테스트용 요청 객체
 		Users mockUser = Users.from(mockRequest);
 
 		// when
@@ -52,7 +52,7 @@ public class UsersServiceTest {
 	@DisplayName("사용자가 서비스를 구독하면 인증 전 상태가 됩니다.")
 	void testSaveUserIsActiveWhenSubscribe() {
 		// given
-		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT);
+		UsersReq mockRequest = new UsersReq("test@test.com", "신나는");
 		Users mockUser = Users.from(mockRequest);
 
 		// when
@@ -66,7 +66,7 @@ public class UsersServiceTest {
 	@DisplayName("구독 활성 상태에서 구독을 취소합니다.")
 	void testCancelSubscription() {
 		// given
-		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT);
+		UsersReq mockRequest = new UsersReq("test@test.com", "신나는");
 
 		when(usersRepository.findById(1L)).thenReturn(Optional.of(
 			Users.createActiveUser(1L, mockRequest)
@@ -82,7 +82,7 @@ public class UsersServiceTest {
 	@DisplayName("구독 전에는 구독을 취소할 수 없습니다.")
 	void throwExceptionCancelSubscriptionWhenPending() {
 		// given
-		UsersReq mockRequest = new UsersReq("test@test.com", SongGenre.UPBEAT);
+		UsersReq mockRequest = new UsersReq("test@test.com", "신나는");
 
 		// thenReturn 사용해서 특정 응답 반환
 		when(usersRepository.findById(1L)).thenReturn(Optional.of(
@@ -102,8 +102,8 @@ public class UsersServiceTest {
 	@DisplayName("이미 존재하는 이메일로는 구독을 신청할 수 없습니다.")
 	void throwExceptionWhenUsingExistedEmail() {
 		// given
-		UsersReq existingUserReq = new UsersReq("test@test.com", SongGenre.UPBEAT);
-		UsersReq newUserReq = new UsersReq("test@test.com", SongGenre.CALM);
+		UsersReq existingUserReq = new UsersReq("test@test.com", "신나는");
+		UsersReq newUserReq = new UsersReq("test@test.com", SongGenre.CALM.getDescription());
 
 		Users existingUser = Users.from(existingUserReq);
 
