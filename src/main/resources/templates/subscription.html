@@ -55,7 +55,7 @@
             window.location.href = '/verified';
         };
 
-        fetch('/api/subscription/subscribe', {
+        fetch('/api/subscriptions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams({ email, genre }),
