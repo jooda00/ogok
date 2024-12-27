@@ -1,7 +1,5 @@
 package com.ogok.ogok.user;
 
-import com.ogok.ogok.song.SongGenre;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,5 +8,5 @@ import lombok.Getter;
 public class UsersReq {
 
 	private String email;
-	private SongGenre songGenre;
+	private String songGenre;
 }

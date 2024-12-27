@@ -60,7 +60,7 @@ public class Users extends BaseEntity {
 	public static Users from(UsersReq usersReq) {
 		return Users.builder()
 			.email(usersReq.getEmail())
-			.songGenre(usersReq.getSongGenre())
+			.songGenre(SongGenre.convertStringToSongGenre(usersReq.getSongGenre()))
 			.status(UsersStatus.PENDING)
 			.songHistories(new ArrayList<>())
 			.build();
@@ -70,7 +70,7 @@ public class Users extends BaseEntity {
 		return Users.builder()
 			.id(id)
 			.email(usersReq.getEmail())
-			.songGenre(usersReq.getSongGenre())
+			.songGenre(SongGenre.convertStringToSongGenre(usersReq.getSongGenre()))
 			.status(UsersStatus.PENDING)
 			.build();
 	}
@@ -79,7 +79,7 @@ public class Users extends BaseEntity {
 		return Users.builder()
 			.id(id)
 			.email(usersReq.getEmail())
-			.songGenre(usersReq.getSongGenre())
+			.songGenre(SongGenre.convertStringToSongGenre(usersReq.getSongGenre()))
 			.status(UsersStatus.ACTIVE)
 			.build();
 	}

@@ -37,12 +37,12 @@ public class SongServiceTest {
 	@Mock
 	private SongHistoryRepository songHistoryRepository;
 
-	private SongGenre songGenre;
+	private String songGenre;
 
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		songGenre = SongGenre.SOULFUL;
+		songGenre = "신나는";
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class SongServiceTest {
 	void saveSongTest() {
 		// given
 		SongReq req = new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
-			"link", songGenre);
+			"link", SongGenre.convertStringToSongGenre(songGenre));
 		Song song = Song.from(req);
 
 		// when
@@ -66,11 +66,11 @@ public class SongServiceTest {
 		// given
 		String email = "test@test.com";
 		Song song = Song.from(new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
-			"link", songGenre));
+			"link", SongGenre.convertStringToSongGenre(songGenre)));
 		Users user = Users.from(new UsersReq(email, songGenre));
 
 		when(usersRepository.findByEmail(email)).thenReturn(user);
-		when(songRepository.findUnsentSong(songGenre, user.getId())).thenReturn(song);
+		when(songRepository.findUnsentSong(SongGenre.convertStringToSongGenre(songGenre), user.getId())).thenReturn(song);
 
 		// when
 		SongRes songRes = songService.getSong(email);
@@ -80,7 +80,7 @@ public class SongServiceTest {
 		assertThat(songRes.getTitle()).isEqualTo(song.getTitle());
 		assertThat(user.getSongHistories().size()).isEqualTo(1);
 
-		verify(songRepository, times(1)).findUnsentSong(songGenre, user.getId());
+		verify(songRepository, times(1)).findUnsentSong(SongGenre.convertStringToSongGenre(songGenre), user.getId());
 		verify(songHistoryRepository, times(1)).save(user.getSongHistories().get(0));
 	}
 
@@ -92,12 +92,12 @@ public class SongServiceTest {
 		Users user = Users.from(new UsersReq(email, songGenre));
 
 		Song sentSong = Song.from(new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
-			"link", songGenre));
+			"link", SongGenre.convertStringToSongGenre(songGenre)));
 		Song notSentSong = Song.from(new SongReq(2L, "파도", "하현상", "가수 하현상 정규 1집 마지막 트랙의 곡입니다.",
-			"link", songGenre));
+			"link", SongGenre.convertStringToSongGenre(songGenre)));
 
 		when(usersRepository.findByEmail(email)).thenReturn(user);
-		when(songRepository.findUnsentSong(songGenre, user.getId()))
+		when(songRepository.findUnsentSong(SongGenre.convertStringToSongGenre(songGenre), user.getId()))
 			.thenReturn(sentSong)
 			.thenReturn(notSentSong);
 
