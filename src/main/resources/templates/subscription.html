@@ -13,7 +13,7 @@
     <p>매일 오전 8시에 원하시는 장르에 맞는 곡을 추천해드립니다.🎵</p>
     <form id="subscription-form">
         <label for="email">이메일 주소
-            <small>* 이메일 변경은 불가합니다. 형식에 맞게 알맞게 입력해주세요.</small>
+            <small>* 이메일 변경은 불가합니다. 형식에 맞게 입력해주세요.</small>
         </label>
         <input type="email" id="email" placeholder="이메일을 입력해주세요." required>
     <label>원하시는 장르
@@ -39,9 +39,9 @@
 <!-- 모달 -->
 <div id="subscription-modal" class="modal" style="display: none;">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <h3>구독 신청 완료 🎉</h3>
-        <p>구독 신청이 완료되었습니다. 창을 닫으시면 메인 페이지로 이동합니다.</p>
+        <h2>구독 신청 완료 🎉</h2>
+        <p>구독 신청이 완료되었습니다. 이메일로 전송된 인증 번호를 입력해주세요!</p>
+        <button id="go-to-verification">인증 번호 입력하기</button>
     </div>
 </div>
 
@@ -51,8 +51,8 @@
         const email = document.getElementById('email').value;
         const genre = document.querySelector('input[name="genre"]:checked').value;
         const modal = document.getElementById('subscription-modal');
-        const closeModal = () => {
-            window.location.href = '/';
+        const redirectToVerification = () => {
+            window.location.href = '/verified';
         };
 
         fetch('/api/subscription/subscribe', {
@@ -64,12 +64,10 @@
                 const message = await response.text();
                 if (response.ok) {
                     modal.style.display = 'flex';
-                    document.querySelector('.close').onclick = closeModal;
-                    modal.onclick = (event) => {
-                        if (event.target === modal) closeModal();
-                    };
+                    document.getElementById('go-to-verification').onclick = redirectToVerification;
+                    setTimeout(redirectToVerification, 5000); // 5초 후 자동 이동
                 } else {
-                    alert(message);
+                    alert(message); // 실패 시 오류 메시지 표시
                 }
             })
             .catch(error => {
