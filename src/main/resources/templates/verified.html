@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/verified.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오곡 인증 번호 입력</title>
+</head>
+<body>
+<div class="container">
+    <h1>오곡 인증 번호 입력</h1>
+    <form id="verification-form">
+        <label for="verification-code">인증 번호
+        <small>
+            * 이메일로 받으신 인증 번호 6자리를 정확하게 입력해주세요.
+        </small></label>
+        <input type="text" id="verification-code" name="verificationCode" placeholder="인증 번호를 입력해주세요." required>
+        <button type="submit">인증하기</button>
+    </form>
+</div>
+
+<!-- 모달 -->
+<div id="verified-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>오곡 구독 완료🎉</h2>
+        <p>오곡을 구독해주셔서 감사합니다🎤 매일 오전 8시 다양한 음악으로 찾아가겠습니다!</p>
+    </div>
+</div>
+
+<script>
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    const email = sessionStorage.getItem('email'); // 세션 스토리지에서 이메일 가져오기
+    if (!email) {
+        console.error("Email parameter is missing");
+        alert("이메일이 누락되었습니다.");
+    }
+    console.log("Email:", email);
+
+    const modal = document.getElementById('verified-modal');
+    const redirectToVerification = () => {
+            window.location.href = '/';
+    };
+    document.getElementById('verification-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const verificationCode = document.getElementById('verification-code').value;
+
+        fetch('/api/subscriptions/verified', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email, verificationCode }),
+        })
+            .then(async response => {
+                const message = await response.text();
+                if (response.ok) {
+                    modal.style.display = 'flex';
+                    document.getElementById('verified-modal').onclick = redirectToVerification;
+                    setTimeout(redirectToVerification, 5000); // 5초 후 자동 이동
+                } else {
+                    alert(message); // 실패 시 오류 메시지 표시
+                }
+            })
+            .catch(error => console.error("Error verifying code:", error));
+    });
+</script>
+</body>
+</html>
