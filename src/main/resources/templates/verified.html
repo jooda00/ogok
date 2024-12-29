@@ -18,7 +18,13 @@
         <button type="submit">인증하기</button>
     </form>
 </div>
-
+<!-- 에러 메시지 모달 -->
+<div id="error-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" id="close-error-modal">&times;</span>
+        <p id="error-message-text">에러 메시지가 여기에 표시됩니다.</p>
+    </div>
+</div>
 <!-- 모달 -->
 <div id="verified-modal" class="modal" style="display: none;">
     <div class="modal-content">
@@ -41,6 +47,8 @@
     console.log("Email:", email);
 
     const modal = document.getElementById('verified-modal');
+    const errorModal = document.getElementById('error-modal');
+    const errorMessageText = document.getElementById('error-message-text');
     const redirectToVerification = () => {
             window.location.href = '/';
     };
@@ -60,11 +68,20 @@
                     document.getElementById('verified-modal').onclick = redirectToVerification;
                     setTimeout(redirectToVerification, 5000); // 5초 후 자동 이동
                 } else {
-                    alert(message); // 실패 시 오류 메시지 표시
+                    errorModal.style.display = 'flex';
+                    errorMessageText.textContent = message;
                 }
             })
-            .catch(error => console.error("Error verifying code:", error));
+            .catch(error => {
+                console.error("Error verifying code:", error);
+                errorModal.style.display = 'flex';
+                errorMessageText.textContent = '서버와의 통신 중 문제가 발생했습니다.';
+            });
     });
+    // 에러 모달 닫기 버튼
+    document.getElementById('close-error-modal').onclick = () => {
+        document.getElementById('error-modal').style.display = 'none';
+    };
 </script>
 </body>
 </html>
