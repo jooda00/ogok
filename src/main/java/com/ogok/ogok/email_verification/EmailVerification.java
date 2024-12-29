@@ -43,6 +43,9 @@ public class EmailVerification extends BaseEntity {
 	}
 
 	public void setIsVerifiedTure() {
+		if (this.isVerified == true) {
+			throw new IllegalArgumentException("이미 인증된 사용자 입니다.");
+		}
 		this.isVerified = true;
 	}
 }
