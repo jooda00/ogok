@@ -35,4 +35,16 @@ public class EmailVerificationController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구독 신청 중 오류가 발생했습니다.");
 		}
 	}
+
+	@PostMapping("/verified")
+	public ResponseEntity<String> verify(@RequestParam String email, @RequestParam String verificationCode) {
+		try {
+			// 인증 번호 처리
+			emailVerificationService.verifyVerificationCode(email, verificationCode);
+			return ResponseEntity.ok("인증 번호가 정상적으로 처리되었습니다. 서비스 사용이 가능합니다.");
+		} catch (Exception e) {
+			log.error("인증 번호 처리 중 오류 발생", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("인증 번호 처리 중 오류가 발생했습니다.");
+		}
+	}
 }
