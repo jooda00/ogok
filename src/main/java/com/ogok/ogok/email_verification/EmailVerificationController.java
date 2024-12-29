@@ -30,9 +30,10 @@ public class EmailVerificationController {
 			// 인증 이메일 전송
 			emailVerificationService.sendVerificationEmail(email);
 			return ResponseEntity.ok("구독 신청이 완료되었습니다. 이메일을 확인해주세요.");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		} catch (Exception e) {
-			log.error("구독 신청 처리 중 오류 발생", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구독 신청 중 오류가 발생했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
 		}
 	}
 
@@ -42,9 +43,10 @@ public class EmailVerificationController {
 			// 인증 번호 처리
 			emailVerificationService.verifyVerificationCode(email, verificationCode);
 			return ResponseEntity.ok("인증 번호가 정상적으로 처리되었습니다. 서비스 사용이 가능합니다.");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		} catch (Exception e) {
-			log.error("인증 번호 처리 중 오류 발생", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("인증 번호 처리 중 오류가 발생했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
 		}
 	}
 }
