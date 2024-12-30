@@ -92,6 +92,9 @@ public class Users extends BaseEntity {
 	}
 
 	public void setStatusActive() {
+		if (UsersStatus.ACTIVE.equals(this.status)) {
+			throw new IllegalArgumentException("이미 구독이 활성화된 사용자 입니다.");
+		}
 		this.status = UsersStatus.ACTIVE;
 	}
 }
