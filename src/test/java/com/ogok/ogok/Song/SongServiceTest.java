@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import com.ogok.ogok.song.Song;
 import com.ogok.ogok.song.SongGenre;
 import com.ogok.ogok.song.SongRepository;
+import com.ogok.ogok.song.SongReq;
 import com.ogok.ogok.song.SongReqForTest;
 import com.ogok.ogok.song.SongRes;
 import com.ogok.ogok.song.SongService;
@@ -44,20 +46,20 @@ public class SongServiceTest {
 		songGenre = "신나는";
 	}
 
-	// @Test
-	// @DisplayName("음악 디비 저장 테스트")
-	// void saveSongTest() {
-	// 	// given
-	// 	SongReq req = new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
-	// 		"link", SongGenre.convertStringToSongGenre(songGenre));
-	// 	Song song = Song.fromForTest(req);
-	//
-	// 	// when
-	// 	songService.saveSong(req);
-	//
-	// 	// then
-	// 	verify(songRepository, times(1)).save(ArgumentMatchers.refEq(song));
-	// }
+	@Test
+	@DisplayName("음악 디비 저장 테스트")
+	void saveSongTest() {
+		// given
+		SongReq req = new SongReq("바람", "윤하", "가수 윤하의 노래 입니다.",
+			"link", SongGenre.convertStringToSongGenre(songGenre));
+		Song song = Song.from(req);
+
+		// when
+		songService.saveSong(req);
+
+		// then
+		verify(songRepository, times(1)).save(ArgumentMatchers.refEq(song));
+	}
 
 	@Test
 	@DisplayName("사용자가 선택한 장르 음악 추출 쿼리 테스트")

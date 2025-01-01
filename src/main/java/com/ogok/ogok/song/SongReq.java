@@ -7,7 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SongReq {
 
-	private Long id;
 	private String title;
 	private String singer;
 	private String introduction;
