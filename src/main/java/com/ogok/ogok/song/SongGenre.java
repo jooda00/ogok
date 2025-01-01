@@ -7,8 +7,8 @@ public enum SongGenre {
 
 	UPBEAT("신나는"),
 	INTENSE("강렬한"),
-	CALM("잔잔한"),
-	SOULFUL("감성적인");
+	SOULFUL("감성적인"),
+	CALM("잔잔한");
 
 	private String description;
 
