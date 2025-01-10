@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SongReq {
+public class SongReqForTest {
 
+	private Long id;
 	private String title;
 	private String singer;
 	private String introduction;

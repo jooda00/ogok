@@ -1,5 +1,6 @@
 package com.ogok.ogok.common;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,14 @@ public class EmailService {
 
 	private final JavaMailSender javaMailSender;
 
+	@Value("${spring.mail.username}")
+	private String username;
+
 	public void sendMail(String to, String subject, String content) {
 		MimeMessage mailMessage = javaMailSender.createMimeMessage();
 		try {
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mailMessage, true, "UTF-8");
+			mimeMessageHelper.setFrom(username, "오곡");
 			mimeMessageHelper.setTo(to); // 메일 수신자
 			mimeMessageHelper.setSubject(subject); // 메일 제목
 			mimeMessageHelper.setText(content, true); // 메일 본문

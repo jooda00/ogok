@@ -1,5 +1,8 @@
 package com.ogok.ogok.song;
 
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,7 +12,7 @@ public class SongRes {
 
 	private String title;
 	private String singer;
-	private String introduction;
+	private List<String> introduction;
 	private String youtubeLink;
 	private SongGenre songGenre;
 
@@ -17,9 +20,17 @@ public class SongRes {
 		return SongRes.builder()
 			.title(song.getTitle())
 			.singer(song.getSinger())
-			.introduction(song.getIntroduction())
+			.introduction(splitIntroduction(song.getIntroduction()))
 			.youtubeLink(song.getYoutubeLink())
 			.songGenre(song.getSongGenre())
 			.build();
 	}
+
+	private static List<String> splitIntroduction(String introduction) {
+		if (introduction == null || introduction.isEmpty()) {
+			return Arrays.asList("");
+		}
+		return Arrays.asList(introduction.split("\\.\\s*"));
+	}
+
 }

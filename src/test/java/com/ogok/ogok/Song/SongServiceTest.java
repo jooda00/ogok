@@ -15,6 +15,7 @@ import com.ogok.ogok.song.Song;
 import com.ogok.ogok.song.SongGenre;
 import com.ogok.ogok.song.SongRepository;
 import com.ogok.ogok.song.SongReq;
+import com.ogok.ogok.song.SongReqForTest;
 import com.ogok.ogok.song.SongRes;
 import com.ogok.ogok.song.SongService;
 import com.ogok.ogok.song_history.SongHistory;
@@ -49,7 +50,7 @@ public class SongServiceTest {
 	@DisplayName("음악 디비 저장 테스트")
 	void saveSongTest() {
 		// given
-		SongReq req = new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
+		SongReq req = new SongReq("바람", "윤하", "가수 윤하의 노래 입니다.",
 			"link", SongGenre.convertStringToSongGenre(songGenre));
 		Song song = Song.from(req);
 
@@ -65,7 +66,7 @@ public class SongServiceTest {
 	void querySongByUsersSongGenreTest() {
 		// given
 		String email = "test@test.com";
-		Song song = Song.from(new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
+		Song song = Song.fromForTest(new SongReqForTest(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
 			"link", SongGenre.convertStringToSongGenre(songGenre)));
 		Users user = Users.from(new UsersReq(email, songGenre));
 
@@ -91,9 +92,9 @@ public class SongServiceTest {
 		String email = "test@test.com";
 		Users user = Users.from(new UsersReq(email, songGenre));
 
-		Song sentSong = Song.from(new SongReq(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
+		Song sentSong = Song.fromForTest(new SongReqForTest(1L, "바람", "윤하", "가수 윤하의 노래 입니다.",
 			"link", SongGenre.convertStringToSongGenre(songGenre)));
-		Song notSentSong = Song.from(new SongReq(2L, "파도", "하현상", "가수 하현상 정규 1집 마지막 트랙의 곡입니다.",
+		Song notSentSong = Song.fromForTest(new SongReqForTest(2L, "파도", "하현상", "가수 하현상 정규 1집 마지막 트랙의 곡입니다.",
 			"link", SongGenre.convertStringToSongGenre(songGenre)));
 
 		when(usersRepository.findByEmail(email)).thenReturn(user);

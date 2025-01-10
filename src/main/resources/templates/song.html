@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오곡 - 오늘의 추천 곡</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Arial', sans-serif; background-color: #f9f9f9;">
+<table style="max-width: 600px; width: 100%; margin: 20px auto; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: 1px solid #d6e3f3; border-radius: 12px; overflow: hidden;">
+    <!-- Header -->
+    <tr>
+        <td style="padding: 20px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #ffffff; font-size: 16px; font-weight: bold;">
+            오늘의 추천 곡
+        </td>
+    </tr>
+    <!-- Main Content -->
+    <tr>
+        <td style="padding: 20px; text-align: left; color: #000000; font-size: 16px; line-height: 1.6;">
+            <p style="font-size: 14px;">오늘의 추천 곡은 가수 <span style="font-weight: bold;" th:text="${res.singer}">가수 이름</span>의 <span style="font-weight: bold;" th:text="${res.title}">곡 제목</span> 입니다.</p>
+            <p style="margin: 3px 0; font-size: 14px;" th:each="line : ${res.introduction}" th:text="${line}">곡소개</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="#" th:href="${res.youtubeLink}" target="_blank" style="display: inline-block; padding: 12px 24px; font-size: 12px; color: #ffffff; background-color: #3689eb; text-decoration: none; border-radius: 6px; font-weight: bold;">YouTube에서 듣기</a>
+            </div>
+        </td>
+    </tr>
+    <!-- Footer -->
+    <tr>
+        <td style="background-color: #f0f4fa; text-align: center; font-size: 10px; color: #666666; padding: 10px;">
+            © 2024 오곡. 매일 아침 당신의 플레이리스트를 채워드립니다.
+        </td>
+    </tr>
+</table>
+</body>
+</html>
