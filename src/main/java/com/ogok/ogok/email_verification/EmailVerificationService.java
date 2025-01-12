@@ -26,7 +26,7 @@ public class EmailVerificationService {
 
 	public void sendVerificationEmail(String email) {
 		log.info("인증번호 생성 시작");
-		String verificationCode = generateVerificationCode();
+		String verificationCode = generateCode();
 		log.info("인증번호 생성 완료");
 
 		log.info("인증메일 전송 시작");
@@ -63,8 +63,8 @@ public class EmailVerificationService {
 		users.setStatusActive();
 	}
 
-	private String generateVerificationCode() {
-		return String.valueOf((int) (Math.random() * 1000000));
+	private String generateCode() {
+		return String.valueOf((int)(Math.random() * 899999) + 100000);
 	}
 
 	private String setContext(String verificationCode) {
