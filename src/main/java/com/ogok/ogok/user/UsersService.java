@@ -7,14 +7,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class UsersService {
 
 	private final UsersRepository usersRepository;
 
-	@Transactional
 	public void saveUser(UsersReq usersReq) {
 		log.info("사용자 저장 시작");
 		Users user = Users.from(usersReq);

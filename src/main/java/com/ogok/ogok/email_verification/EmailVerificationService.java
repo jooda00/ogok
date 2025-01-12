@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional(readOnly = true)
 public class EmailVerificationService {
 
 	private final EmailVerificationRepository emailVerificationRepository;
@@ -25,7 +24,6 @@ public class EmailVerificationService {
 	private final EmailService emailService;
 	private final SpringTemplateEngine templateEngine;
 
-	@Transactional
 	public void sendVerificationEmail(String email) {
 		log.info("인증번호 생성 시작");
 		String verificationCode = generateVerificationCode();
