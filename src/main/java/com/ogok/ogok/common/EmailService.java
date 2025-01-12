@@ -3,6 +3,7 @@ package com.ogok.ogok.common;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class EmailService {
 	@Value("${spring.mail.username}")
 	private String username;
 
+	@Async
 	public void sendMail(String to, String subject, String content) {
 		MimeMessage mailMessage = javaMailSender.createMimeMessage();
 		try {
