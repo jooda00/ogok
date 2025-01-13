@@ -23,6 +23,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
+      TZ: Asia/Seoul
     volumes:
       - ${DB_VOLUMES}
     ports:
